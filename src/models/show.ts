@@ -12,4 +12,5 @@ export type show = {
     original: string;
   };
   summary: string;
+  _links: { self: { href: string }; previousepisode: { href: string } };
 };

@@ -8,7 +8,7 @@ export const showFetch = (query: string) => ({
   payload: query,
 });
 
-export const showFetched = (name: show[]) => ({
+export const showFetched = (query: string, shows: show[]) => ({
   type: SHOW_FETCHED,
-  payload: name,
+  payload: { query, shows },
 });
