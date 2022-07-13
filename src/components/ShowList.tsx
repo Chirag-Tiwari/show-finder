@@ -16,7 +16,6 @@ const ShowList: FC<ShowListProps> = ({ shows, showsFetch, query }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     showsFetch(event.target.value);
   };
-  console.log("query", query);
   return (
     <div className="space-y-3 m-3">
       <input
