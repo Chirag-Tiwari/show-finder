@@ -7,6 +7,7 @@ export type show = {
   rating: {
     average: null;
   };
+  url: string;
   image: {
     medium: string;
     original: string;

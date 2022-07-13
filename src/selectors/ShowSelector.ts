@@ -8,7 +8,7 @@ const showAgainstQuerySelector = createSelector(
   (showState) => showState.againstQuery
 );
 
-const showEntitiesSelector = createSelector(
+export const showEntitiesSelector = createSelector(
   showStateSelector,
   (showState) => showState.entities
 );
