@@ -1,6 +1,6 @@
 import { normalize, schema } from "normalizr";
 import { Reducer } from "redux";
-import { SHOW_FETCH, SHOW_FETCHED } from "../actions/ShowActions";
+import { SHOWS_FETCH, SHOWS_FETCHED } from "../actions/ShowActions";
 import { show } from "../models/show";
 
 export type showState = {
@@ -20,13 +20,13 @@ export const showReducer: Reducer<showState> = (
   action
 ) => {
   switch (action.type) {
-    case SHOW_FETCH:
+    case SHOWS_FETCH:
       return {
         ...state,
         query: action.payload,
       };
 
-    case SHOW_FETCHED:
+    case SHOWS_FETCHED:
       const { query, shows } = action.payload as {
         query: string;
         shows: show[];

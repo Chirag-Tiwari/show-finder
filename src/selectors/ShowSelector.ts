@@ -2,6 +2,12 @@ import { createSelector } from "reselect";
 import { state } from "../Store";
 
 const showStateSelector = (s: state) => s.shows;
+const showDetalStateSelector = (s: state) => s.showDetail;
+
+export const showDetailEntitiesSelector = createSelector(
+  showDetalStateSelector,
+  (showDetailState) => showDetailState.entities
+);
 
 const showAgainstQuerySelector = createSelector(
   showStateSelector,

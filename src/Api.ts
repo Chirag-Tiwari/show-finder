@@ -7,3 +7,8 @@ export const getShows = async (query: string) => {
 
   return response.data.map((s: any) => s.show);
 };
+
+export const getShow = async (showId: number) => {
+  const response = await axios.get("https://api.tvmaze.com/shows/" + showId);
+  return response.data;
+};

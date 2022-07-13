@@ -1,15 +1,32 @@
-import { FC, memo } from "react";
+import { FC, memo, useEffect } from "react";
 import { connect } from "react-redux";
+import { showDetailFetch } from "../actions/ShowActions";
 import { withRouter, WithRouterProps } from "../hoc/WithRouter";
 import { show } from "../models/show";
-import { showEntitiesSelector } from "../selectors/ShowSelector";
+import { showDetailEntitiesSelector } from "../selectors/ShowSelector";
 import { state } from "../Store";
 
 type ShowDetailsProps = {
   show: show;
+  fetchShow: (showId: number) => void;
 } & WithRouterProps;
 
-const ShowDetails: FC<ShowDetailsProps> = ({ show }) => {
+const ShowDetails: FC<ShowDetailsProps> = ({ show, fetchShow, params }) => {
+  useEffect(() => {
+    fetchShow(+params.showId);
+  }, []);
+  if (!show) {
+    return (
+      <div className="flex justify-center items-center mt-4">
+        <div
+          className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full"
+          role="status"
+        >
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className=" bg-teal-300 rounded-md">
       {" "}
@@ -38,7 +55,13 @@ const ShowDetails: FC<ShowDetailsProps> = ({ show }) => {
 ShowDetails.defaultProps = {};
 
 const mapStateToProps = (s: state, props: any) => ({
-  show: showEntitiesSelector(s)[+props.params.showId],
+  show: showDetailEntitiesSelector(s)[+props.params.showId],
 });
 
-export default withRouter(connect(mapStateToProps)(memo(ShowDetails)));
+const mapDispatchToProps = {
+  fetchShow: showDetailFetch,
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(memo(ShowDetails))
+);
