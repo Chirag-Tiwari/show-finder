@@ -5,6 +5,7 @@ import { show } from "../models/show";
 import { showsQuerySelector, showsSelector } from "../selectors/ShowSelector";
 import { state } from "../Store";
 import Show from "./Show";
+import Spinner from "./Spinner";
 
 type ShowListProps = {
   query: string;
@@ -16,6 +17,10 @@ const ShowList: FC<ShowListProps> = ({ shows, showsFetch, query }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     showsFetch(event.target.value);
   };
+
+  if (!shows) {
+    return <Spinner />;
+  }
   return (
     <div className="space-y-3 m-3">
       <input
@@ -24,10 +29,11 @@ const ShowList: FC<ShowListProps> = ({ shows, showsFetch, query }) => {
         value={query}
         onChange={handleChange}
       />
+
       <h1 className="text-2xl font-extrabold">List Of Shows</h1>
       <div className="space-y-4 ">
         {shows.map((s) => (
-          <Show key={s.id} show={s}></Show>
+          <Show key={s.id} show={s} query={query}></Show>
         ))}
       </div>
     </div>

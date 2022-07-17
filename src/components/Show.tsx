@@ -2,12 +2,12 @@ import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { show } from "../models/show";
 
-type ShowProps = { show: show };
+type ShowProps = { show: show; query: string };
 
-const Show: FC<ShowProps> = ({ show }) => {
+const Show: FC<ShowProps> = ({ show, query }) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/shows/" + show.id);
+    navigate(`/shows/${show.id}?q=${query}`);
   };
   return (
     <div
