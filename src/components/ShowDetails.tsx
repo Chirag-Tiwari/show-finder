@@ -10,6 +10,7 @@ import { withRouter, WithRouterProps } from "../hoc/WithRouter";
 import { actor } from "../models/Actors";
 import { show } from "../models/show";
 import {
+  showActorLoadingSelector,
   showActorsSelector,
   showEntitiesSelector,
   showLoadingSelector,
@@ -22,6 +23,7 @@ import Spinner from "./Spinner";
 
 type ShowDetailsProps = {
   loading: boolean;
+  actorsLoading: boolean;
   show: show;
   actors: actor[];
   fetchShows: (query: string) => void;
@@ -33,6 +35,7 @@ type ShowDetailsProps = {
 
 const ShowDetails: FC<ShowDetailsProps> = ({
   loading,
+  actorsLoading,
   actors,
   show,
   fetchShows,
@@ -118,6 +121,7 @@ const ShowDetails: FC<ShowDetailsProps> = ({
           </div>
           <h2 className="text-2xl font-semibold">Actors:</h2>
           <div className="space-x-5 flex flex-wrap justify-evenly space-y-4">
+            {actorsLoading && <Spinner />}
             {actors &&
               actors?.map((a) => (
                 <div className="w-1/3">
@@ -154,6 +158,7 @@ const mapStateToProps = (s: state, props: any) => {
   return {
     show: showEntitiesSelector(s)[showId],
     loading: showLoadingSelector(s)[showId],
+    actorsLoading: showActorLoadingSelector(s)[showId],
     actors: showActorsSelector(s)[showId],
     prev: prevShow && `/shows/${prevShow.id}`,
     next: nextShow && `/shows/${nextShow.id}`,

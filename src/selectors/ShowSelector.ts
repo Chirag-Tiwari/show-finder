@@ -44,6 +44,16 @@ export const showLoadingSelector = createSelector(
   (showState) => showState.showLoading
 );
 
+export const showsLoadingSelectors = createSelector(
+  showStateSelector,
+  (showState) => showState.showsLoading
+);
+
+export const showActorLoadingSelector = createSelector(
+  showStateSelector,
+  (showState) => showState.showActorLoading
+);
+
 export const actorEntitiesSelector = createSelector(
   actorStateSelector,
   (actorState) => actorState.entities

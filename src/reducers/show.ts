@@ -13,6 +13,8 @@ import { show } from "../models/show";
 
 export type showState = {
   showLoading: { [id: number]: boolean };
+  showsLoading: boolean;
+  showActorLoading: { [id: number]: boolean };
   entities: { [id: number]: show };
   againstQuery: { [query: string]: number[] };
   query: string;
@@ -24,6 +26,8 @@ export const initialShowState = {
   againstQuery: {},
   query: "",
   showLoading: {},
+  showActorLoading: {},
+  showsLoading: false,
   actors: {},
 };
 export const showReducer: Reducer<showState> = (
@@ -35,6 +39,10 @@ export const showReducer: Reducer<showState> = (
       return {
         ...state,
         showLoading: { ...state.showLoading, [action.payload]: true },
+        showsActorLoading: {
+          ...state.showActorLoading,
+          [action.payload]: true,
+        },
       };
 
     case SHOW_FETCHED:
@@ -43,12 +51,17 @@ export const showReducer: Reducer<showState> = (
         ...state,
         entities: { ...state.entities, [show.id]: show },
         showLoading: { ...state.showLoading, [show.id]: false },
+        showsActorLoading: {
+          ...state.showActorLoading,
+          [show.id]: false,
+        },
       };
 
     case SHOWS_FETCH:
       return {
         ...state,
         query: action.payload,
+        showsLoading: true,
       };
 
     case SHOWS_FETCHED:
@@ -65,6 +78,7 @@ export const showReducer: Reducer<showState> = (
         ...state,
         entities: { ...state.entities, ...normalizedShows },
         againstQuery: { ...state.againstQuery, [query]: ids },
+        showsLoading: false,
       };
 
     case SHOW_CAST_FETCHED:
